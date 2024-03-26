@@ -1,11 +1,12 @@
-var assert = require('assert');
-describe('Book', function() {
+var assert = require("assert");
 
-	var Book = require('../src/book');
+describe("Book", function() {
+
+	var Book = require("../src/book");
 
 	before(function(){
 
 	});
 
 
-})
+});

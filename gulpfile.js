@@ -1,6 +1,5 @@
 var gulp = require('gulp');
 var jshint = require('gulp-jshint');
-var concat = require('gulp-concat');
 var rename = require('gulp-rename');
 var uglify = require('gulp-uglify');
 var gutil = require('gulp-util');
@@ -10,21 +9,16 @@ var onError = function (err) {
 };
 var server = require("./tools/serve.js");
 
-var source = require('vinyl-source-stream');
-var buffer = require('vinyl-buffer');
-var sourcemaps = require('gulp-sourcemaps');
-
 var size = require('gulp-size');
 
 var webpack = require("webpack");
-var WebpackDevServer = require("webpack-dev-server");
 var webpackConfig = require("./webpack.config");
 
 var Server = require('karma').Server;
 
 // modify some webpack config options
 var watchConfig = Object.create(webpackConfig);
-watchConfig.devtool = "sourcemap";
+watchConfig.devtool = "source-map";
 watchConfig.watch = true;
 
 // create a single instance of the compiler to allow caching
@@ -58,8 +52,8 @@ gulp.task('bundle', function (cb) {
 // Minify JS
 gulp.task('minify', ['bundle'], function(){
 	var uglifyOptions = {
-			mangle: true,
-			preserveComments : "license"
+		mangle: true,
+		preserveComments : "license"
 	};
 	return gulp.src(['dist/epub.js', 'dist/polyfills.js'])
 		.pipe(plumber({ errorHandler: onError }))
@@ -146,21 +140,3 @@ gulp.task('docs', ['docs:html', 'docs:md']);
 // Default
 gulp.task('default', ['lint', 'bundle']);
 
-function bundle(done) {
-	if (!done) {
-		webpackConfig.watch = true;
-	} else {
-		webpackConfig.watch = false;
-	}
-
-	webpack(webpackConfig, function(err, stats) {
-		if(err) throw new gutil.PluginError("webpack", err);
-		gutil.log("[webpack]", stats.toString({
-			colors: true,
-			chunks: false
-		}));
-
-		done && done();
-
-	});
-}
