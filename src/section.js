@@ -91,11 +91,11 @@ class Section {
 
 		this.load(_request).
 			then(function(contents){
-				var userAgent = (typeof navigator !== 'undefined' && navigator.userAgent) || '';
-				var isIE = userAgent.indexOf('Trident') >= 0;
+				var userAgent = (typeof navigator !== "undefined" && navigator.userAgent) || "";
+				var isIE = userAgent.indexOf("Trident") >= 0;
 				var Serializer;
 				if (typeof XMLSerializer === "undefined" || isIE) {
-					Serializer = require("xmldom/dom-parser").XMLSerializer;
+					Serializer = require("xmldom/lib/dom-parser").XMLSerializer;
 				} else {
 					Serializer = XMLSerializer;
 				}
@@ -171,7 +171,7 @@ class Section {
 		});
 
 		return matches;
-	};
+	}
 
 	/**
 	* Reconciles the current chapters layout properies with

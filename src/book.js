@@ -496,9 +496,9 @@ class Book {
 					this.opening.resolve(this);
 				});
 			})
-			.catch((err) => {
-				console.error(err);
-			});
+				.catch((err) => {
+					console.error(err);
+				});
 		} else {
 			// Resolve book opened promise
 			this.loaded.displayOptions.then(() => {
